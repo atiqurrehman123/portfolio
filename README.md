@@ -77,3 +77,9 @@ git remote add origin https://github.com/atiqurrehman123/portfolio.git
 git push -u origin main
 
 npm install gh-pages --save-dev
+
+git add .
+ git commit -m "newchanges"
+ git push
+
+ npm run deploy
