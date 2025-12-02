@@ -1,5 +1,29 @@
 {
   "name": "portfolio",
+  "description": "A modern, responsive portfolio website built with Next.js 16, React 19, and Tailwind CSS. Features smooth animations, dark mode support, and a fully data-driven architecture for easy customization.",
+  "keywords": [
+    "portfolio",
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "framer-motion",
+    "lucide-react"
+  ],
+  "author": "Atiq Rehman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atiqurrehman123/portfolio"
+  },
+  "homepage": "https://atiqurrehman123.github.io/portfolio",
+  "bugs": {
+    "url": "https://github.com/atiqurrehman123/portfolio/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "npm@10.9.0",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +33,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "framer-motion": "^12.23.25",
+    "lucide-react": "^0.469.0",
     "next": "16.0.6",
     "react": "19.2.0",
     "react-dom": "19.2.0"

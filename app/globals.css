@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light theme (default) */
+  --background: #f3f4f6; /* gray-100 */
+  --foreground: #020617; /* slate-950 */
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #e5e7eb; /* gray-200 */
 }
 
 @theme inline {
@@ -12,15 +18,92 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+/* Project cards – light & dark variants */
+.project-card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #020617;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="dark"] .project-card {
+  background: #020617;
+  border-color: #1f2937;
+  color: #e5e7eb;
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.75);
+}
+
+.project-card p {
+  color: rgba(15, 23, 42, 0.7);
+}
+
+[data-theme="dark"] .project-card p {
+  color: rgba(209, 213, 219, 0.8);
+}
+
+/* Navbar links */
+.nav-link {
+  color: #020617; /* slate-950 for light mode */
+}
+
+[data-theme="dark"] .nav-link {
+  color: #e5e7eb; /* gray-200 for dark mode */
+}
+
+.nav-icon {
+  color: #020617; /* dark in light mode */
+}
+
+[data-theme="dark"] .nav-icon {
+  color: #e5e7eb;
+}
+
+/* Mobile nav */
+.mobile-menu {
+  background: color-mix(in srgb, var(--background) 96%, #020617 4%);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.45); /* slate-400 */
+}
+
+[data-theme="dark"] .mobile-menu {
+  background: #020617;
+  border-bottom-color: rgba(15, 23, 42, 0.9); /* slate-900 */
+}
+
+.mobile-link {
+  color: #020617;
+  border-color: rgba(148, 163, 184, 0.45);
+}
+
+[data-theme="dark"] .mobile-link {
+  color: #e5e7eb;
+  border-color: rgba(31, 41, 55, 0.9); /* slate-800 */
+}
+
+/* Hero summary text */
+.hero-summary {
+  color: #334155; /* slate-700 in light mode */
+}
+
+[data-theme="dark"] .hero-summary {
+  color: #f9fafb; /* gray-50 in dark mode for higher contrast */
+}
+
+/* Experience bullet text */
+.experience-text {
+  color: #334155; /* slate-700 light */
+}
+
+[data-theme="dark"] .experience-text {
+  color: #e5e7eb; /* gray-200 dark */
 }
