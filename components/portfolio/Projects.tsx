@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Zap, Cpu, Layers, Star, Monitor } from "lucide-react";
+import { ExternalLink, Zap, Cpu, Layers, Star, Monitor, Eye } from "lucide-react";
 import { PORTFOLIO_DATA } from "./data";
 import { SectionHeader } from "./SectionHeader";
+import { ProjectModal } from "./ProjectModal";
 
 const projectIconMap = {
   Zap,
@@ -18,14 +20,31 @@ type ProjectIconKey = keyof typeof projectIconMap;
 
 type Project = (typeof PORTFOLIO_DATA.projects)[number] & {
   link?: string;
+  images?: readonly string[] | string[];
+  videos?: readonly string[] | string[];
 };
 
 interface ProjectCardProps {
   project: Project;
+  onViewMedia: (project: Project) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
   const Icon = projectIconMap[project.icon as ProjectIconKey] ?? Zap;
+
+  const hasMedia = (project.images && project.images.length > 0) ||
+                   (project.videos && project.videos.length > 0);
+
+  // Show eye button for all projects (even without media to show "Coming Soon")
+  const showEyeButton = true;
+
+  const handleEyeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (hasMedia) {
+      onViewMedia(project);
+    }
+  };
 
   const cardContent = (
     <>
@@ -34,7 +53,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/0 to-cyan-500/0 group-hover:from-cyan-500/5 group-hover:via-cyan-500/3 group-hover:to-cyan-500/5 transition-all duration-500 pointer-events-none"
         initial={false}
       />
-      
+
       {/* Glow effect on hover */}
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -52,7 +71,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           transition={{ delay: 0.2 }}
         >
           <motion.div
-            whileHover={{ 
+            whileHover={{
               rotate: [0, -15, 15, -15, 0],
               scale: 1.1
             }}
@@ -74,17 +93,41 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             />
             <Icon size={32} className="text-cyan-400 relative z-10" />
           </motion.div>
-          {project.link && (
-            <motion.div
-              whileHover={{ 
-                scale: 1.3, 
-                rotate: 45,
-              }}
-              className="text-gray-500 group-hover:text-cyan-400 transition-colors relative z-10"
-            >
-              <ExternalLink size={20} />
-            </motion.div>
-          )}
+          <div className="flex items-center gap-2">
+            {showEyeButton && (
+              <motion.button
+                onClick={handleEyeClick}
+                whileHover={{
+                  scale: 1.2,
+                  rotate: [0, -10, 10, -10, 0],
+                }}
+                whileTap={{ scale: 0.9 }}
+                className="text-gray-500 group-hover:text-cyan-400 transition-colors relative z-10 p-1 rounded-full hover:bg-cyan-400/10"
+                aria-label={`View ${project.name} media`}
+                title={hasMedia ? "View project media" : "View project details"}
+              >
+                <Eye size={20} />
+              </motion.button>
+            )}
+            {project.link && (
+              <motion.button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(project.link, '_blank', 'noopener,noreferrer');
+                }}
+                whileHover={{
+                  scale: 1.3,
+                  rotate: 45,
+                }}
+                className="text-gray-500 group-hover:text-cyan-400 transition-colors relative z-10 p-1 rounded-full hover:bg-cyan-400/10"
+                aria-label={`Visit ${project.name}`}
+                title="Visit project"
+              >
+                <ExternalLink size={20} />
+              </motion.button>
+            )}
+          </div>
         </motion.div>
 
         <motion.h3
@@ -121,7 +164,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
-            whileHover={{ 
+            whileHover={{
               scale: 1.15,
               backgroundColor: "rgba(34, 211, 238, 0.2)",
               color: "rgb(34, 211, 238)",
@@ -149,8 +192,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-100px" },
-    whileHover: { 
-      y: -12, 
+    whileHover: {
+      y: -12,
       scale: 1.02,
       transition: { duration: 0.3 }
     },
@@ -183,7 +226,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 export const Projects: React.FC = () => {
   const { sections, projects } = PORTFOLIO_DATA;
   const projectsSection = sections.projects;
-  
+
+  // Include all projects (even those without media) to show "Coming Soon" message
+  const projectsWithMedia: readonly Project[] = projects;
+
+  const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -195,28 +244,61 @@ export const Projects: React.FC = () => {
     },
   };
 
-  return (
-    <section id={projectsSection.id} className="bg-[var(--background)] py-24 px-4">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader
-          number={projectsSection.number}
-          title={projectsSection.title}
-          id={projectsSection.id}
-        />
+  const handleViewMedia = (project: Project) => {
+    // Find the index of the project in the list
+    const projectIndex = projectsWithMedia.findIndex((p) => p.name === project.name);
+    if (projectIndex !== -1) {
+      setCurrentProjectIndex(projectIndex);
+      setIsModalOpen(true);
+    }
+  };
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-        >
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
-          ))}
-        </motion.div>
-      </div>
-    </section>
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleProjectChange = (newIndex: number) => {
+    setCurrentProjectIndex(newIndex);
+  };
+
+  return (
+    <>
+      <section id={projectsSection.id} className="bg-[var(--background)] py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader
+            number={projectsSection.number}
+            title={projectsSection.title}
+            id={projectsSection.id}
+          />
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          >
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                project={project}
+                onViewMedia={handleViewMedia}
+              />
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {projectsWithMedia.length > 0 && (
+        <ProjectModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          projects={projectsWithMedia}
+          currentProjectIndex={currentProjectIndex}
+          onProjectChange={handleProjectChange}
+        />
+      )}
+    </>
   );
 };
 

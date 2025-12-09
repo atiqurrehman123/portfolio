@@ -13,9 +13,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: "Atiq Rehman | Senior Frontend Developer (React & Next.js)",
   description:
     "Portfolio of Atiq Rehman, Senior Frontend Developer specializing in React, Next.js, TypeScript, and scalable frontend architectures.",
+  openGraph: {
+    title: "Atiq Rehman | Senior Frontend Developer",
+    description:
+      "Portfolio of Atiq Rehman, Senior Frontend Developer specializing in React, Next.js, TypeScript, and scalable frontend architectures.",
+    images: [
+      {
+        url: "/profile-photo.png",
+        width: 1200,
+        height: 630,
+        alt: "Atiq Rehman - Senior Frontend Developer",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Atiq Rehman | Senior Frontend Developer",
+    description:
+      "Portfolio of Atiq Rehman, Senior Frontend Developer specializing in React, Next.js, TypeScript, and scalable frontend architectures.",
+    images: ["/profile-photo.png"],
+  },
+  icons: {
+    icon: "/profile-photo.png",
+    apple: "/profile-photo.png",
+  },
 };
 
 export default function RootLayout({
