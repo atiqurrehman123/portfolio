@@ -139,6 +139,35 @@ export const PORTFOLIO_DATA = {
   ],
   projects: [
     {
+      name: 'Aurex Permium Watches',
+      category: 'Healthcare',
+      icon: 'Monitor',
+      description:
+        'Modern e-commerce platform built with  featuring a full storefront (catalog, cart, checkout, order tracking) and an admin dashboard (analytics, product & order management, user roles) .',
+      tags: [
+        'Next.js',
+        'React',
+        'TypeScript',
+        'PostgreSQL',
+        'MERN',
+        'Supabase',
+        'Server Side Rendering',
+        'Tailwind CSS',
+      ],
+      link: 'https://e-commerce-sigma-lyart.vercel.app/checkout',
+      images: [
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967599/ecomefront_mecccw.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967607/ecomefront2_nbj5ps.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967589/ecomefront3_bifbrf.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967589/ecomefront3_bifbrf.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967610/ecommerdashbaord_cdbrjb.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765967565/ecommerdashbaord2_acjwsz.png',
+      ],
+      videos: [
+        'https://res.cloudinary.com/chat-app-work/video/upload/v1765967625/AUREX_-_Premium_Watches_E-Commerce_Platform_zrfq9d.mp4',
+      ],
+    },
+    {
       name: 'Clinic Management System',
       category: 'Healthcare',
       icon: 'Monitor',
@@ -152,7 +181,7 @@ export const PORTFOLIO_DATA = {
         'MERN',
         'Server Side Rendering',
       ],
-      link: 'https://private-doctor-clinic-london.vercel.app/',
+      link: 'https://al-raas-private-clinic.vercel.app/',
       images: [
         'https://res.cloudinary.com/chat-app-work/image/upload/v1765286626/p2_uxqowr.png',
         'https://res.cloudinary.com/chat-app-work/image/upload/v1765286614/health1_cm9wnu.png',
