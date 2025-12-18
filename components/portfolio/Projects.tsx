@@ -1,11 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Zap, Cpu, Layers, Star, Monitor, Eye } from "lucide-react";
-import { PORTFOLIO_DATA } from "./data";
-import { SectionHeader } from "./SectionHeader";
-import { ProjectModal } from "./ProjectModal";
+import { motion } from 'framer-motion';
+import {
+  Box,
+  Cpu,
+  ExternalLink,
+  Eye,
+  Heart,
+  Layers,
+  LayoutGrid,
+  MessageCircle,
+  Mic,
+  Monitor,
+  PlayCircle,
+  ShoppingCart,
+  Star,
+  Zap,
+} from 'lucide-react';
+import { useState } from 'react';
+import { ProjectModal } from './ProjectModal';
+import { PORTFOLIO_DATA } from './data';
 
 const projectIconMap = {
   Zap,
@@ -18,7 +32,29 @@ const projectIconMap = {
 
 type ProjectIconKey = keyof typeof projectIconMap;
 
+// Category to icon mapping
+const categoryIconMap: Record<
+  string,
+  React.ComponentType<{ size?: number; className?: string }>
+> = {
+  'E-COMMERCE': ShoppingCart,
+  'E-Commerce': ShoppingCart,
+  Healthcare: Heart,
+  HEALTHCARE: Heart,
+  POS: Box,
+  'AI / Multimedia': Mic,
+  'AI/Multimedia': Mic,
+  'SaaS Dashboard': LayoutGrid,
+  'SAAS DASHBOARD': LayoutGrid,
+  'AI/Generative': MessageCircle,
+  'AI-Generative': MessageCircle,
+  Enterprise: Monitor,
+  'Multi-tenant': Star,
+  'Real Estate': ExternalLink,
+};
+
 type Project = (typeof PORTFOLIO_DATA.projects)[number] & {
+  icon?: ProjectIconKey;
   link?: string;
   images?: readonly string[] | string[];
   videos?: readonly string[] | string[];
@@ -30,13 +66,9 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
-  const Icon = projectIconMap[project.icon as ProjectIconKey] ?? Zap;
-
-  const hasMedia = (project.images && project.images.length > 0) ||
-                   (project.videos && project.videos.length > 0);
-
-  // Show eye button for all projects (even without media to show "Coming Soon")
-  const showEyeButton = true;
+  const hasMedia =
+    (project.images && project.images.length > 0) ||
+    (project.videos && project.videos.length > 0);
 
   const handleEyeClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,181 +78,125 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
     }
   };
 
+  // Get category icon
+  const CategoryIcon = categoryIconMap[project.category] || Monitor;
+
+  // Get first image for preview
+  const previewImage =
+    project.images && project.images.length > 0 ? project.images[0] : null;
+
+  // Format technologies: show first 3, then "+X more"
+  const technologies = project.tags || [];
+  const displayedTechs = technologies.slice(0, 3);
+  const remainingCount = Math.max(0, technologies.length - 3);
+
   const cardContent = (
     <>
-      {/* Animated background gradient on hover */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/0 to-cyan-500/0 group-hover:from-cyan-500/5 group-hover:via-cyan-500/3 group-hover:to-cyan-500/5 transition-all duration-500 pointer-events-none"
-        initial={false}
-      />
-
-      {/* Glow effect on hover */}
-      <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          boxShadow: "0 0 40px rgba(34, 211, 238, 0.2)",
-        }}
-      />
-
-      <div className="relative z-10">
-        <motion.div
-          className="flex justify-between items-center mb-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          <motion.div
-            whileHover={{
-              rotate: [0, -15, 15, -15, 0],
-              scale: 1.1
+      {/* Project Image */}
+      {previewImage && (
+        <div className="relative h-64 overflow-hidden bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE]">
+          <img
+            src={previewImage}
+            alt={project.name}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={e => {
+              (e.target as HTMLImageElement).style.display = 'none';
             }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.5 }}
-            className="relative"
-          >
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl"
-            />
-            <Icon size={32} className="text-cyan-400 relative z-10" />
-          </motion.div>
-          <div className="flex items-center gap-2">
-            {showEyeButton && (
-              <motion.button
-                onClick={handleEyeClick}
-                whileHover={{
-                  scale: 1.2,
-                  rotate: [0, -10, 10, -10, 0],
-                }}
-                whileTap={{ scale: 0.9 }}
-                className="text-gray-500 group-hover:text-cyan-400 transition-colors relative z-10 p-1 rounded-full hover:bg-cyan-400/10"
-                aria-label={`View ${project.name} media`}
-                title={hasMedia ? "View project media" : "View project details"}
+          />
+          {hasMedia && (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <PlayCircle size={56} className="text-[#A855F7] drop-shadow-lg" />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Project Info */}
+      <div className="p-6 pb-5">
+        <div className="mb-4 inline-flex items-center gap-3 rounded-full bg-[#F3E8FF] px-4 py-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E9D5FF] bg-[#F5F3FF] text-[#A855F7]">
+            <CategoryIcon size={18} />
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#7C3AED]">
+            {project.category}
+          </span>
+        </div>
+
+        <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-[#7C3AED]">
+          {project.name}
+        </h3>
+
+        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+          {project.description}
+        </p>
+
+        {technologies.length > 0 && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            {displayedTechs.map((tech, i) => (
+              <span
+                key={i}
+                className="rounded-full bg-[#F3E8FF] px-3 py-1 text-xs font-semibold text-[#7C3AED] shadow-sm shadow-[#E9D5FF]"
               >
-                <Eye size={20} />
-              </motion.button>
-            )}
-            {project.link && (
-              <motion.button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  window.open(project.link, '_blank', 'noopener,noreferrer');
-                }}
-                whileHover={{
-                  scale: 1.3,
-                  rotate: 45,
-                }}
-                className="text-gray-500 group-hover:text-cyan-400 transition-colors relative z-10 p-1 rounded-full hover:bg-cyan-400/10"
-                aria-label={`Visit ${project.name}`}
-                title="Visit project"
-              >
-                <ExternalLink size={20} />
-              </motion.button>
+                {tech}
+              </span>
+            ))}
+            {remainingCount > 0 && (
+              <span className="rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#7C3AED]">
+                +{remainingCount}
+              </span>
             )}
           </div>
-        </motion.div>
+        )}
 
-        <motion.h3
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-cyan-400 transition-colors duration-300"
-        >
-          {project.name}
-        </motion.h3>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-sm md:text-base mb-6 leading-relaxed"
-        >
-          {project.description}
-        </motion.p>
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => {
+              e.stopPropagation();
+            }}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#7C3AED] transition-colors hover:text-[#6D28D9]"
+          >
+            View Live <ExternalLink size={16} />
+          </a>
+        )}
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-gray-800 group-hover:border-cyan-400/30 transition-colors duration-300 relative z-10"
-      >
-        {project.tags.map((tag, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
-            whileHover={{
-              scale: 1.15,
-              backgroundColor: "rgba(34, 211, 238, 0.2)",
-              color: "rgb(34, 211, 238)",
-            }}
-            className="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full cursor-pointer transition-all duration-200"
-          >
-            {tag}
-          </motion.span>
-        ))}
-      </motion.div>
-
-      {/* Click indicator */}
-      {project.link && (
-        <motion.div
-          className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-cyan-400 text-xs font-mono flex items-center gap-1"
+      {/* Eye button overlay for viewing media explicitly */}
+      {hasMedia && (
+        <motion.button
+          onClick={handleEyeClick}
+          className="absolute right-4 top-4 inline-flex items-center justify-center rounded-full bg-background/80 p-2 text-accent shadow-md shadow-accent/20 ring-1 ring-border/60 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:ring-accent/70"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label={`View ${project.name} media`}
         >
-          <span>Visit</span>
-          <ExternalLink size={12} />
-        </motion.div>
+          <Eye size={18} />
+        </motion.button>
       )}
     </>
   );
 
+  const handleCardClick = () => {
+    onViewMedia(project);
+  };
+
   const cardProps = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
+    viewport: { once: true, margin: '-100px' },
     whileHover: {
-      y: -12,
-      scale: 1.02,
-      transition: { duration: 0.3 }
+      y: -8,
+      transition: { duration: 0.3 },
     },
-    whileTap: { scale: 0.98 },
-    transition: { duration: 0.4 },
-    className: "project-card border rounded-xl p-6 flex flex-col h-full justify-between transition-all duration-300 cursor-pointer group relative overflow-hidden"
+    transition: { duration: 0.45 },
+    onClick: handleCardClick,
+    className:
+      'project-card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border-2 border-[#A855F7] bg-card shadow-lg shadow-[0_18px_45px_rgba(129,140,248,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_0_0_3px_rgba(168,85,247,0.95)] hover:outline hover:outline-[3px] hover:outline-offset-[3px] hover:outline-[#E9D5FF]',
   };
 
-  if (project.link) {
-    return (
-      <motion.a
-        {...cardProps}
-        href={project.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Visit ${project.name}`}
-      >
-        {cardContent}
-      </motion.a>
-    );
-  }
-
-  return (
-    <motion.div {...cardProps}>
-      {cardContent}
-    </motion.div>
-  );
+  return <motion.div {...cardProps}>{cardContent}</motion.div>;
 };
 
 export const Projects: React.FC = () => {
@@ -246,7 +222,9 @@ export const Projects: React.FC = () => {
 
   const handleViewMedia = (project: Project) => {
     // Find the index of the project in the list
-    const projectIndex = projectsWithMedia.findIndex((p) => p.name === project.name);
+    const projectIndex = projectsWithMedia.findIndex(
+      p => p.name === project.name
+    );
     if (projectIndex !== -1) {
       setCurrentProjectIndex(projectIndex);
       setIsModalOpen(true);
@@ -257,26 +235,30 @@ export const Projects: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleProjectChange = (newIndex: number) => {
-    setCurrentProjectIndex(newIndex);
-  };
-
   return (
     <>
-      <section id={projectsSection.id} className="bg-[var(--background)] py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            number={projectsSection.number}
-            title={projectsSection.title}
-            id={projectsSection.id}
-          />
+      <section id={projectsSection.id} className="bg-background py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16 text-center"
+          >
+            <span className="mb-4 block font-mono text-lg text-accent">
+              {projectsSection.number}
+            </span>
+            <h2 className="text-4xl font-black md:text-5xl lg:text-6xl">
+              {projectsSection.title}
+            </h2>
+          </motion.div>
 
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
             {projects.map((project, index) => (
               <ProjectCard
@@ -295,10 +277,9 @@ export const Projects: React.FC = () => {
           onClose={handleCloseModal}
           projects={projectsWithMedia}
           currentProjectIndex={currentProjectIndex}
-          onProjectChange={handleProjectChange}
+          onProjectChange={setCurrentProjectIndex}
         />
       )}
     </>
   );
 };
-

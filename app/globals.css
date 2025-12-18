@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   /* Light theme (default) */
@@ -6,7 +6,7 @@
   --foreground: #020617; /* slate-950 */
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #0a0a0a;
   --foreground: #e5e7eb; /* gray-200 */
 }
@@ -25,8 +25,41 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Global scrollbar (modern, theme-aware) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(129, 140, 248, 0.8) rgba(15, 23, 42, 0.9);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--background) 90%, #020617 10%);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgba(129, 140, 248, 0.95),
+    rgba(56, 189, 248, 0.95)
+  );
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    rgba(129, 140, 248, 1),
+    rgba(56, 189, 248, 1)
+  );
 }
 
 /* Project cards – light & dark variants */
@@ -37,7 +70,7 @@ body {
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
 }
 
-[data-theme="dark"] .project-card {
+[data-theme='dark'] .project-card {
   background: #020617;
   border-color: #1f2937;
   color: #e5e7eb;
@@ -48,7 +81,7 @@ body {
   color: rgba(15, 23, 42, 0.7);
 }
 
-[data-theme="dark"] .project-card p {
+[data-theme='dark'] .project-card p {
   color: rgba(209, 213, 219, 0.8);
 }
 
@@ -57,7 +90,7 @@ body {
   color: #020617; /* slate-950 for light mode */
 }
 
-[data-theme="dark"] .nav-link {
+[data-theme='dark'] .nav-link {
   color: #e5e7eb; /* gray-200 for dark mode */
 }
 
@@ -65,7 +98,7 @@ body {
   color: #020617; /* dark in light mode */
 }
 
-[data-theme="dark"] .nav-icon {
+[data-theme='dark'] .nav-icon {
   color: #e5e7eb;
 }
 
@@ -75,7 +108,7 @@ body {
   border-bottom: 1px solid rgba(148, 163, 184, 0.45); /* slate-400 */
 }
 
-[data-theme="dark"] .mobile-menu {
+[data-theme='dark'] .mobile-menu {
   background: #020617;
   border-bottom-color: rgba(15, 23, 42, 0.9); /* slate-900 */
 }
@@ -85,7 +118,7 @@ body {
   border-color: rgba(148, 163, 184, 0.45);
 }
 
-[data-theme="dark"] .mobile-link {
+[data-theme='dark'] .mobile-link {
   color: #e5e7eb;
   border-color: rgba(31, 41, 55, 0.9); /* slate-800 */
 }
@@ -95,7 +128,7 @@ body {
   color: #334155; /* slate-700 in light mode */
 }
 
-[data-theme="dark"] .hero-summary {
+[data-theme='dark'] .hero-summary {
   color: #f9fafb; /* gray-50 in dark mode for higher contrast */
 }
 
@@ -104,6 +137,49 @@ body {
   color: #334155; /* slate-700 light */
 }
 
-[data-theme="dark"] .experience-text {
+[data-theme='dark'] .experience-text {
   color: #e5e7eb; /* gray-200 dark */
+}
+
+/* Project modal shell – strong background */
+.project-modal-shell {
+  background: #020617; /* slate-950 */
+  color: #e5e7eb;
+  border-color: rgba(148, 163, 184, 0.4); /* slate-400 */
+}
+
+[data-theme='dark'] .project-modal-shell {
+  background: #020617;
+  border-color: rgba(31, 41, 55, 0.9); /* slate-800/900 */
+}
+
+/* Project modal custom scrollbar */
+.project-modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(129, 140, 248, 0.8) rgba(15, 23, 42, 0.9);
+}
+
+.project-modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.project-modal-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.95); /* dark track */
+}
+
+.project-modal-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgba(129, 140, 248, 0.9),
+    rgba(56, 189, 248, 0.9)
+  );
+  border-radius: 9999px;
+}
+
+.project-modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    rgba(129, 140, 248, 1),
+    rgba(56, 189, 248, 1)
+  );
 }
