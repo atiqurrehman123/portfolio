@@ -324,6 +324,23 @@ export const PORTFOLIO_DATA = {
       ],
     },
     {
+      name: 'Code Vista',
+      category: 'Company Website',
+      icon: 'Monitor',
+      description:
+        'A company website for Code Vista, a software development company.',
+      tags: ['Next.js', 'Tailwind CSS', 'TypeScript'],
+
+      images: [
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1767617368/codevista1_pnk1nx.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1767617369/codevista2_cgc4cq.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1767617367/codevista_pgyuxo.png',
+      ],
+      videos: [
+        'https://res.cloudinary.com/chat-app-work/video/upload/v1767617525/CodeVista_Studio_-_Modern_Software_Development_Agency_eyv4yd.mp4',
+      ],
+    },
+    {
       name: 'PTCL Audio Portal',
       category: 'Enterprise',
       icon: 'Monitor',
