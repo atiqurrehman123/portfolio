@@ -245,6 +245,30 @@ export const PORTFOLIO_DATA = {
       ],
     },
     {
+      name: 'Sales Dashboard',
+      category: 'SaaS Dashboard',
+      icon: 'Monitor',
+      description:
+        '🚀 Real-time sales dashboards: Track revenue vs targets, forecast scenarios, and identify trends—driving 15-25% revenue growth. Segment customers by CLV, predict churn risks, optimize products—reducing ',
+      tags: ['Next.js 15', 'TypeScript', 'Clerk', 'Shadcn UI', 'Tailwind v4'],
+      link: 'https://sales-dashboard-seven-sandy.vercel.app/sales-dashboard/overview',
+      images: [
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293919/magic3_bdldng.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293918/magic1_ujxfeg.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293919/magic_yjmufv.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293920/magic2_sygrqh.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293920/magic9_xgslcl.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293919/magic5_uiau3v.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293922/magic6_nn5dys.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293922/magic10_chfnmj.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293921/magic4_fvogzh.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1765293922/magic12_kounqf.png',
+      ],
+      videos: [
+        'https://res.cloudinary.com/chat-app-work/video/upload/v1765294792/Authentication___Sign_In_nj2e2f.mp4',
+      ],
+    },
+    {
       name: 'MagicVest Dashboard',
       category: 'SaaS Dashboard',
       icon: 'Monitor',
