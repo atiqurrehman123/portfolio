@@ -47,11 +47,11 @@ export const Typewriter: React.FC<TypewriterProps> = ({
   const shouldShowCursor = isTyping && displayedText.length < text.length;
 
   return (
-    <span className="relative inline-flex items-center">
+    <span className="relative inline">
       {displayedText}
       {shouldShowCursor && (
         <span
-          className={`inline-block w-0.5 ${cursorHeightClass} bg-cyan-400 ml-1 absolute top-1/2 transform -translate-y-1/2 ${cursorClass}`}
+          className={`inline-block w-0.5 ${cursorHeightClass} bg-cyan-400 ml-1 align-middle ${cursorClass}`}
         />
       )}
     </span>

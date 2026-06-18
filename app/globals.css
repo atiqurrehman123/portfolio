@@ -2,20 +2,188 @@
 
 :root {
   /* Light theme (default) */
-  --background: #f3f4f6; /* gray-100 */
-  --foreground: #020617; /* slate-950 */
+  --background: #f6f6fd; /* soft violet-tinted white */
+  --foreground: #0b0a1a; /* deep ink */
+  --surface: #ffffff;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+
+  /* Signature accent gradient (shared across themes) */
+  --accent-1: #7c3aed; /* violet-600 */
+  --accent-2: #0891b2; /* cyan-700 */
+  --accent-3: #db2777; /* pink-600 */
+  --brand-gradient: linear-gradient(
+    120deg,
+    var(--accent-1) 0%,
+    var(--accent-2) 50%,
+    var(--accent-3) 100%
+  );
 }
 
 [data-theme='dark'] {
-  --background: #0a0a0a;
-  --foreground: #e5e7eb; /* gray-200 */
+  --background: #070611; /* deep indigo-black */
+  --foreground: #edeefb; /* crisp soft white */
+  --surface: #100e22; /* violet-tinted panel */
+  --border-subtle: rgba(167, 139, 250, 0.18);
+
+  --accent-1: #a78bfa; /* violet-400 */
+  --accent-2: #22d3ee; /* cyan-400 */
+  --accent-3: #f472b6; /* pink-400 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-inter);
+}
+
+/* ===== Reusable brand utilities ===== */
+
+/* Animated gradient text for headlines */
+.gradient-text {
+  background: var(--brand-gradient);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-pan 6s ease infinite;
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Aurora spotlight backdrop for the hero */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora::before,
+.aurora::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.55;
+}
+.aurora::before {
+  width: 55vw;
+  height: 55vw;
+  top: -18%;
+  left: -10%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent-1) 85%, transparent),
+    transparent 65%
+  );
+  animation: aurora-drift-1 18s ease-in-out infinite;
+}
+.aurora::after {
+  width: 50vw;
+  height: 50vw;
+  bottom: -20%;
+  right: -8%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent-3) 80%, transparent),
+    transparent 65%
+  );
+  animation: aurora-drift-2 22s ease-in-out infinite;
+}
+@keyframes aurora-drift-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8%, 6%) scale(1.12);
+  }
+}
+@keyframes aurora-drift-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-7%, -8%) scale(1.15);
+  }
+}
+
+/* Glass surface used for stat pills, badges, cards */
+.glass {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Gradient-bordered primary CTA */
+.btn-gradient {
+  position: relative;
+  background: var(--brand-gradient);
+  background-size: 200% auto;
+  color: #fff;
+  transition: background-position 0.5s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--accent-1) 60%, transparent);
+}
+
+.btn-gradient:hover {
+  background-position: right center;
+  box-shadow: 0 16px 40px -8px color-mix(in srgb, var(--accent-2) 70%, transparent);
+}
+
+/* Soft animated glow blob */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+/* Availability "live" dot */
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #22c55e;
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: #22c55e;
+  opacity: 0.45;
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 html {
@@ -25,7 +193,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system,
+  font-family: var(--font-inter), system-ui, -apple-system,
     BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -64,17 +232,46 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Project cards – light & dark variants */
 .project-card {
+  position: relative;
   background: #ffffff;
-  border-color: #e5e7eb;
+  border-color: var(--border-subtle);
   color: #020617;
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Gradient ring that fades in on hover */
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--brand-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px -20px color-mix(in srgb, var(--accent-1) 45%, transparent);
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 [data-theme='dark'] .project-card {
-  background: #020617;
-  border-color: #1f2937;
+  background: var(--surface);
+  border-color: var(--border-subtle);
   color: #e5e7eb;
-  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.75);
+  box-shadow: 0 18px 60px rgba(2, 6, 23, 0.6);
 }
 
 .project-card p {
@@ -141,16 +338,11 @@ html::-webkit-scrollbar-thumb:hover {
   color: #e5e7eb; /* gray-200 dark */
 }
 
-/* Project modal shell – strong background */
+/* Project modal shell – theme-aware */
 .project-modal-shell {
-  background: #020617; /* slate-950 */
-  color: #e5e7eb;
-  border-color: rgba(148, 163, 184, 0.4); /* slate-400 */
-}
-
-[data-theme='dark'] .project-modal-shell {
-  background: #020617;
-  border-color: rgba(31, 41, 55, 0.9); /* slate-800/900 */
+  background: var(--surface);
+  color: var(--foreground);
+  border-color: var(--border-subtle);
 }
 
 /* Project modal custom scrollbar */

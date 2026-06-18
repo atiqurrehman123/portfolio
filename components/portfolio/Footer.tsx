@@ -29,6 +29,29 @@ export const Footer: React.FC = () => {
     },
   };
 
+  const socials = [
+    personalInfo.email && {
+      href: `mailto:${personalInfo.email}`,
+      label: "Email",
+      Icon: Mail,
+    },
+    personalInfo.linkedin && {
+      href: personalInfo.linkedin,
+      label: "LinkedIn",
+      Icon: Linkedin,
+    },
+    personalInfo.github && {
+      href: personalInfo.github,
+      label: "GitHub",
+      Icon: Github,
+    },
+    personalInfo.upwork && {
+      href: personalInfo.upwork,
+      label: "Upwork",
+      Icon: Globe,
+    },
+  ].filter(Boolean) as { href: string; label: string; Icon: typeof Mail }[];
+
   return (
     <footer
       id={footer.id}
@@ -43,7 +66,7 @@ export const Footer: React.FC = () => {
       >
         <motion.p
           variants={itemVariants}
-          className="text-cyan-400 font-mono mb-4"
+          className="gradient-text font-mono mb-4 inline-block"
         >
           {footer.label}
         </motion.p>
@@ -55,7 +78,7 @@ export const Footer: React.FC = () => {
         </motion.h2>
         <motion.p
           variants={itemVariants}
-          className="text-[var(--foreground)] dark:text-white text-lg mb-12"
+          className="text-[var(--foreground)]/70 text-lg leading-relaxed mb-12 max-w-xl mx-auto"
         >
           {footer.description}
         </motion.p>
@@ -66,7 +89,7 @@ export const Footer: React.FC = () => {
           variants={itemVariants}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-block px-10 py-4 bg-cyan-600 text-white rounded-xl hover:bg-cyan-500 transition-colors font-bold text-lg shadow-2xl shadow-cyan-500/30"
+          className="btn-gradient inline-block px-10 py-4 rounded-xl font-bold text-lg"
         >
           <Mail size={20} className="inline-block mr-2 -mt-0.5" />{" "}
           {footer.ctaLabel}
@@ -74,60 +97,31 @@ export const Footer: React.FC = () => {
 
         <motion.div
           variants={itemVariants}
-          className="flex justify-center gap-6 pt-12 text-gray-500"
+          className="flex justify-center gap-4 pt-14"
         >
-          {personalInfo.email && (
+          {socials.map(({ href, label, Icon }) => (
             <motion.a
-              href={`mailto:${personalInfo.email}`}
-              whileHover={{ scale: 1.2, y: -4, color: "rgb(34, 211, 238)" }}
-              whileTap={{ scale: 0.9 }}
-              className="transition-colors"
-            >
-              <Mail size={24} />
-            </motion.a>
-          )}
-          {personalInfo.linkedin && (
-            <motion.a
-              href={personalInfo.linkedin}
-              target="_blank"
+              key={label}
+              href={href}
+              target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noreferrer"
-              whileHover={{ scale: 1.2, y: -4, color: "rgb(34, 211, 238)" }}
+              aria-label={label}
+              whileHover={{ scale: 1.12, y: -4 }}
               whileTap={{ scale: 0.9 }}
-              className="transition-colors"
+              className="glass flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--foreground)]/70 transition-colors hover:border-[var(--accent-2)]/60 hover:text-[var(--accent-2)]"
             >
-              <Linkedin size={24} />
+              <Icon size={20} />
             </motion.a>
-          )}
-          {personalInfo.github && (
-            <motion.a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.2, y: -4, color: "rgb(34, 211, 238)" }}
-              whileTap={{ scale: 0.9 }}
-              className="transition-colors"
-            >
-              <Github size={24} />
-            </motion.a>
-          )}
-          {personalInfo.upwork && (
-            <motion.a
-              href={personalInfo.upwork}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.2, y: -4, color: "rgb(34, 211, 238)" }}
-              whileTap={{ scale: 0.9 }}
-              className="transition-colors"
-              aria-label="Upwork Profile"
-            >
-              <Globe size={24} />
-            </motion.a>
-          )}
+          ))}
         </motion.div>
 
-        {/* <div className="mt-16 pt-8 text-gray-500 text-sm font-mono border-t border-gray-900">
-          <p>Crafted with React &amp; Tailwind by {personalInfo.name}</p>
-        </div> */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-16 border-t border-[var(--border-subtle)] pt-8 text-sm text-[var(--foreground)]/50"
+        >
+          © {new Date().getFullYear()} {personalInfo.name} · Built with Next.js
+          &amp; Tailwind CSS
+        </motion.div>
       </motion.div>
     </footer>
   );

@@ -1,13 +1,15 @@
 {
   "name": "portfolio",
-  "description": "A modern, responsive portfolio website built with Next.js 16, React 19, and Tailwind CSS. Features smooth animations, dark mode support, and a fully data-driven architecture for easy customization.",
+  "description": "Portfolio of Atiq Rehman, a MERN Stack & React Native developer. Built with Next.js 16, React 19, and Tailwind CSS, featuring smooth animations, dark mode, and a fully data-driven architecture.",
   "keywords": [
     "portfolio",
+    "mern",
+    "react-native",
     "nextjs",
     "react",
-    "tailwindcss",
-    "framer-motion",
-    "lucide-react"
+    "nodejs",
+    "mongodb",
+    "tailwindcss"
   ],
   "author": "Atiq Rehman",
   "license": "MIT",

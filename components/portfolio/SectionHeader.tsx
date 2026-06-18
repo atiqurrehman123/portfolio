@@ -27,7 +27,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-cyan-400 font-mono text-xl mr-3"
+        className="gradient-text font-mono text-xl mr-3"
       >
         {number}.
       </motion.span>
@@ -44,7 +44,8 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-        className="ml-4 h-px bg-gray-700/50 flex-grow max-w-sm origin-left"
+        style={{ background: "var(--brand-gradient)" }}
+        className="ml-4 h-px flex-grow max-w-sm origin-left opacity-40"
       />
     </motion.h2>
   );

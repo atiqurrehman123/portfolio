@@ -54,7 +54,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           >
             <button
               onClick={onClose}
-              className="sticky top-4 float-right mr-4 rounded-full bg-card p-2 shadow-lg transition-colors hover:bg-muted"
+              aria-label="Close"
+              className="glass sticky top-4 float-right mr-4 rounded-full border border-[var(--border-subtle)] p-2 text-[var(--foreground)] shadow-lg transition-colors hover:border-[var(--accent-2)]/60 hover:text-[var(--accent-2)]"
             >
               <X size={24} />
             </button>
@@ -62,15 +63,15 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
             <div className="p-6 sm:p-8">
               <div className="mb-6">
                 {currentProject.category && (
-                  <span className="text-xs font-semibold uppercase tracking-wide text-accent">
+                  <span className="gradient-text text-xs font-bold uppercase tracking-[0.18em]">
                     {currentProject.category}
                   </span>
                 )}
-                <h2 className="mt-2 mb-4 text-3xl font-black md:text-4xl">
+                <h2 className="mt-2 mb-4 text-3xl font-black md:text-4xl text-[var(--foreground)]">
                   {currentProject.name}
                 </h2>
                 {currentProject.description && (
-                  <p className="mb-6 text-base text-muted-foreground md:text-lg">
+                  <p className="mb-6 text-base text-[var(--foreground)]/70 md:text-lg">
                     {currentProject.description}
                   </p>
                 )}
@@ -80,7 +81,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     href={currentProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mb-6 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
+                    className="btn-gradient mb-6 inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold"
                   >
                     View Live Project
                   </a>
@@ -91,7 +92,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     {tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="rounded-full bg-accent/5 px-3 py-1 text-xs font-semibold text-accent"
+                        className="rounded-full border border-[var(--border-subtle)] bg-[var(--accent-2)]/10 px-3 py-1 text-xs font-semibold text-[var(--accent-2)]"
                       >
                         {tag}
                       </span>
@@ -103,11 +104,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               {/* Videos */}
               {videos.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="mb-4 text-2xl font-bold">Demo Video</h3>
+                  <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Demo Video</h3>
                   {videos.map((video, i) => (
                     <div
                       key={i}
-                      className="mb-4 aspect-video overflow-hidden rounded-xl bg-muted"
+                      className="mb-4 aspect-video overflow-hidden rounded-xl bg-[var(--surface)]"
                     >
                       <video
                         controls
@@ -127,12 +128,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               {/* Images */}
               {images.length > 0 && (
                 <div>
-                  <h3 className="mb-4 text-2xl font-bold">Screenshots</h3>
+                  <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Screenshots</h3>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {images.map((image, i) => (
                       <div
                         key={i}
-                        className="relative aspect-video overflow-hidden rounded-xl bg-muted"
+                        className="relative aspect-video overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)]"
                       >
                         <img
                           src={image}

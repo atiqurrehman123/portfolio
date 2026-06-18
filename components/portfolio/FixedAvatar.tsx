@@ -1,23 +1,38 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { PORTFOLIO_DATA } from "./data";
 
 export const FixedAvatar: React.FC = () => {
   const { avatarUrl, name } = PORTFOLIO_DATA.personalInfo;
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      // Show only once the hero (≈ viewport height) is scrolled past
+      setScrolledPastHero(window.scrollY > window.innerHeight * 0.8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
+    <AnimatePresence>
+      {scrolledPastHero && (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, delay: 1 }}
+      exit={{ opacity: 0, x: 50 }}
+      transition={{ duration: 0.5 }}
       className="hidden lg:block fixed right-6 top-1/2 transform -translate-y-1/2 z-40"
     >
       <motion.div
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
-        className="w-24 h-24 rounded-full border-2 border-cyan-500/80 overflow-hidden shadow-2xl shadow-cyan-500/20 cursor-pointer"
+        className="w-20 h-20 rounded-full border-2 border-[var(--accent-2)]/80 overflow-hidden shadow-2xl shadow-[var(--accent-2)]/20 cursor-pointer"
       >
         <motion.div
           whileHover={{ scale: 1.1 }}
@@ -33,15 +48,12 @@ export const FixedAvatar: React.FC = () => {
           />
         </motion.div>
       </motion.div>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ delay: 1.5 }}
-        className="text-center mt-2 text-xs font-mono text-cyan-400"
-      >
+      <p className="text-center mt-2 text-xs font-mono text-[var(--accent-2)]">
         {name.split(" ")[0]}
-      </motion.p>
+      </p>
     </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

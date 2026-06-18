@@ -94,7 +94,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
     <>
       {/* Project Image */}
       {previewImage && (
-        <div className="relative h-64 overflow-hidden bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE]">
+        <div className="relative h-64 overflow-hidden bg-[var(--surface)]">
           <img
             src={previewImage}
             alt={project.name}
@@ -105,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
           />
           {hasMedia && (
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <PlayCircle size={56} className="text-[#A855F7] drop-shadow-lg" />
+              <PlayCircle size={56} className="text-white/90 drop-shadow-lg" />
             </div>
           )}
         </div>
@@ -113,20 +113,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
 
       {/* Project Info */}
       <div className="p-6 pb-5">
-        <div className="mb-4 inline-flex items-center gap-3 rounded-full bg-[#F3E8FF] px-4 py-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E9D5FF] bg-[#F5F3FF] text-[#A855F7]">
+        <div className="mb-4 inline-flex items-center gap-3 rounded-full bg-[var(--accent-1)]/10 px-4 py-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--accent-1)]/20 bg-[var(--accent-1)]/10 text-[var(--accent-1)]">
             <CategoryIcon size={18} />
           </div>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#7C3AED]">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-1)]">
             {project.category}
           </span>
         </div>
 
-        <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-[#7C3AED]">
+        <h3 className="mb-3 text-xl font-bold tracking-tight text-[var(--foreground)] transition-colors group-hover:text-[var(--accent-2)]">
           {project.name}
         </h3>
 
-        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-[var(--foreground)]/65">
           {project.description}
         </p>
 
@@ -135,13 +135,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
             {displayedTechs.map((tech, i) => (
               <span
                 key={i}
-                className="rounded-full bg-[#F3E8FF] px-3 py-1 text-xs font-semibold text-[#7C3AED] shadow-sm shadow-[#E9D5FF]"
+                className="rounded-full border border-[var(--border-subtle)] bg-[var(--accent-2)]/10 px-3 py-1 text-xs font-semibold text-[var(--accent-2)]"
               >
                 {tech}
               </span>
             ))}
             {remainingCount > 0 && (
-              <span className="rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#7C3AED]">
+              <span className="rounded-full border border-[var(--border-subtle)] px-3 py-1 text-xs font-semibold text-[var(--foreground)]/60">
                 +{remainingCount}
               </span>
             )}
@@ -156,7 +156,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
             onClick={e => {
               e.stopPropagation();
             }}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#7C3AED] transition-colors hover:text-[#6D28D9]"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-2)] transition-colors hover:opacity-80"
           >
             View Live <ExternalLink size={16} />
           </a>
@@ -167,7 +167,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
       {hasMedia && (
         <motion.button
           onClick={handleEyeClick}
-          className="absolute right-4 top-4 inline-flex items-center justify-center rounded-full bg-background/80 p-2 text-accent shadow-md shadow-accent/20 ring-1 ring-border/60 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:ring-accent/70"
+          className="glass absolute right-4 top-4 inline-flex items-center justify-center rounded-full p-2 text-[var(--accent-2)] opacity-0 ring-1 ring-[var(--border-subtle)] transition-all duration-300 group-hover:opacity-100 group-hover:ring-[var(--accent-2)]/60"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           aria-label={`View ${project.name} media`}
@@ -193,7 +193,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onViewMedia }) => {
     transition: { duration: 0.45 },
     onClick: handleCardClick,
     className:
-      'project-card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border-2 border-[#A855F7] bg-card shadow-lg shadow-[0_18px_45px_rgba(129,140,248,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_0_0_3px_rgba(168,85,247,0.95)] hover:outline hover:outline-[3px] hover:outline-offset-[3px] hover:outline-[#E9D5FF]',
+      'project-card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border',
   };
 
   return <motion.div {...cardProps}>{cardContent}</motion.div>;
@@ -245,10 +245,10 @@ export const Projects: React.FC = () => {
             viewport={{ once: true }}
             className="mb-16 text-center"
           >
-            <span className="mb-4 block font-mono text-lg text-accent">
-              {projectsSection.number}
+            <span className="gradient-text mb-4 block font-mono text-lg font-bold">
+              {projectsSection.number}.
             </span>
-            <h2 className="text-4xl font-black md:text-5xl lg:text-6xl">
+            <h2 className="text-4xl font-black md:text-5xl lg:text-6xl text-[var(--foreground)]">
               {projectsSection.title}
             </h2>
           </motion.div>

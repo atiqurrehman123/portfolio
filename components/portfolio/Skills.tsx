@@ -89,13 +89,8 @@ const Skills: React.FC = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -4,
-                  borderColor: "rgba(34, 211, 238, 1)",
-                  boxShadow: "0 10px 30px rgba(34, 211, 238, 0.2)"
-                }}
-                className="px-5 py-3 bg-slate-900/95 border border-slate-800 rounded-lg text-slate-100 font-mono text-sm text-center hover:border-cyan-400 hover:text-cyan-300 transition-all cursor-default shadow-lg hover:shadow-cyan-500/10 flex items-center justify-center space-x-2"
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="glass px-5 py-3 border border-[var(--border-subtle)] rounded-lg text-[var(--foreground)] font-mono text-sm text-center hover:border-[var(--accent-2)] transition-all cursor-default shadow-lg flex items-center justify-center space-x-2"
               >
                 <motion.div
                   whileHover={{ rotate: [0, -10, 10, 0] }}
