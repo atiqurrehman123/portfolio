@@ -145,6 +145,36 @@ export const PORTFOLIO_DATA = {
   ],
   projects: [
     {
+      name: 'TemplateForge',
+      category: 'SaaS Marketplace',
+      icon: 'Monitor',
+      description:
+        'A curated marketplace of fully-built, production-grade websites and web apps. Browse a catalog with live demos and full feature lists, buy the complete TypeScript source with one secure Stripe payment (no subscriptions), and download instantly to customize and deploy in minutes. Includes effortless rebranding from a single source of truth, lifetime updates, commercial licensing, customer accounts, and a full admin dashboard (products, orders, taxonomy, testimonials).',
+      tags: [
+        'Next.js 16',
+        'React 19',
+        'TypeScript',
+        'PostgreSQL',
+        'Drizzle ORM',
+        'Stripe',
+        'Auth.js',
+        'Tailwind v4',
+      ],
+      images: [
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge_rfseue.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge1_unxrma.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783897/themfroge3_blbbkc.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783897/themfroge4_z1jv8o.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge5_vqc8du.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge2_nusmup.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783899/themfroge7_p08bvg.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1781783899/themfroge8_odo5dv.png',
+      ],
+      videos: [
+        'https://res.cloudinary.com/chat-app-work/video/upload/v1781784722/TemplateForge_Premium_Next.js_website_templates_source_code_wvnlzs.mp4',
+      ],
+    },
+    {
       name: 'Ivory Salon',
       category: 'Company Website',
       icon: 'Monitor',
