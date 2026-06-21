@@ -160,6 +160,7 @@ export const PORTFOLIO_DATA = {
         'Auth.js',
         'Tailwind v4',
       ],
+      link: 'https://templateforge-eta.vercel.app/',
       images: [
         'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge_rfseue.png',
         'https://res.cloudinary.com/chat-app-work/image/upload/v1781783898/themfroge1_unxrma.png',
