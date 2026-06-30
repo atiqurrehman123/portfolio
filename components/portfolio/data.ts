@@ -145,6 +145,40 @@ export const PORTFOLIO_DATA = {
   ],
   projects: [
     {
+      name: 'Rent A Property',
+      category: 'Real Estate',
+      icon: 'Monitor',
+      description:
+        'A full Property Finder-style real estate platform with a MERN backend. Map-based property search & filters (buy/rent/commercial), community & developer profile pages with reviews, off-plan/new project listings, and role-based accounts (home seekers, agents, admins) each with a tailored dashboard. Agents manage listings, leads, transactions and saved-search alerts; admins oversee the platform. Includes built-in tools — mortgage calculator, rent-vs-buy calculator, and commute estimator — plus saved favorites, market history, a blog for SEO, and secure auth with email verification & password reset.',
+      tags: [
+        'Next.js 16',
+        'React 19',
+        'TypeScript',
+        'Node.js',
+        'Express 5',
+        'MongoDB',
+        'Redux Toolkit',
+        'Leaflet',
+        'MERN',
+      ],
+      link: 'https://real-estate-frontend-rouge.vercel.app/',
+      images: [
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817342/rent1_ixcs0d.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817343/rent2_wzccsi.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817344/rent4_oadhvd.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817341/rent3_rfkpjh.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817340/rent5_fgsub6.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817339/rent6_eimqbo.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817339/rent10_fqwg37.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817339/rent9_qx6t83.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817339/rent7_aaijrq.png',
+        'https://res.cloudinary.com/chat-app-work/image/upload/v1782817338/rent8_jzfpss.png',
+      ],
+      videos: [
+        'https://res.cloudinary.com/chat-app-work/video/upload/v1782817343/rent_vue6ap.mp4',
+      ],
+    },
+    {
       name: 'TemplateForge',
       category: 'SaaS Marketplace',
       icon: 'Monitor',
@@ -503,4 +537,4 @@ export const PORTFOLIO_DATA = {
       videos: [],
     },
   ],
-} as const;
+} as const
